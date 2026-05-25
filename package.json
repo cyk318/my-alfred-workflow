@@ -1,0 +1,17 @@
+{
+  "name": "my-alfred-workflow",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "bun build --compile src/jump.ts --outfile dist/jump && bun build --compile src/ci.ts --outfile dist/ci && bun build --compile src/vv.ts --outfile dist/vv && bun build --compile src/dd.ts --outfile dist/dd && bun build --compile src/urljump.ts --outfile dist/urljump",
+    "pack": "bun run build && cp info.plist icons/*.png dist/ && cd dist && zip -j ../My-Workflow.alfredworkflow info.plist jump ci vv dd urljump *.png && rm info.plist *.png",
+    "dev:jump": "bun run src/jump.ts",
+    "dev:ci": "bun run src/ci.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
