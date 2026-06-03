@@ -10,7 +10,8 @@
 | `ci` | CI | 查看 Jenkins Job 列表及构建状态 |
 | `vv` | Volume | 在低音量 (25) 和高音量 (55) 之间一键切换 |
 | `dd` | DND | 通过 macOS 快捷指令切换勿扰模式 |
-| `oj` | URL Jump | 基于配置文件的 URL 快速跳转 |
+| `cd` / `codeup` | URL Jump | 基于配置文件的 URL 快速跳转 |
+| `dt` / `dtw` | Operator Jump | 按环境跳转运营后台 |
 
 ## 安装
 
@@ -52,22 +53,31 @@
 
 需要在 macOS 快捷指令 App 中创建一个名为 `focus-toggle` 的快捷指令，用于切换勿扰/专注模式。
 
-### oj (URL Jump)
+### cd / codeup (URL Jump)
 
 | 变量 | 必填 | 说明 | 默认值 |
 |------|------|------|--------|
-| `URLJUMP_SECTION` | 否 | 使用的配置 section 名称 | `opsj` |
+| `URLJUMP_SECTION` | 否 | 使用的配置 section 名称 | `cd` |
 
 配置文件路径：`~/.config/urljump.toml`，格式如下：
 
 ```toml
-[data.opsj]
+[data.cd]
 tpl = "https://example.com/app/%s/dashboard"
 keys = ["app-a", "app-b", "app-c"]
 
 [data.dev]
 tpl = "https://dev.example.com/%s"
 keys = ["service-1", "service-2"]
+
+[data.dt]
+require_query = true
+keys = ["online", "beta"]
+urls = { online = "https://operate.duitang.com/backend/#/dashboard", beta = "https://operate-beta2.duitang.com/backend/#/dashboard" }
+dynamic_pattern = "^0[0-9]{2}$"
+dynamic_tpl = "https://operate-t%s.duitang.com/backend/#/dashboard"
 ```
 
-输入 `oj <关键字>` 模糊匹配 key，回车在浏览器打开拼接后的 URL。可通过 `URLJUMP_SECTION` 环境变量切换不同的 section。
+输入 `cd <关键字>` 模糊匹配 key，回车在浏览器打开拼接后的 URL。`codeup <关键字>` 使用 `codeup` section。可通过 `URLJUMP_SECTION` 环境变量切换不同的 section。
+
+输入 `dt <环境>` 或 `dtw <环境>` 按环境跳转运营后台，环境参数必须指定，例如 `online`、`beta`、`024`。匹配 `0xx` 的测试环境会通过 `dynamic_tpl` 动态拼接 URL。

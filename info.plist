@@ -9,7 +9,7 @@
 	<key>description</key>
 	<string>Project Jump &amp; Jenkins CI</string>
 	<key>createdby</key>
-	<string>gxk</string>
+	<string>yikang.chen</string>
 	<key>version</key>
 	<string>1.0.0</string>
 	<key>category</key>
@@ -153,18 +153,18 @@
 				<string>{query}</string>
 			</dict>
 		</dict>
-		<!-- Script Filter: oj -->
+		<!-- Script Filter: cd -->
 		<dict>
 			<key>type</key>
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>oj-filter</string>
+			<string>cd-filter</string>
 			<key>version</key>
 			<integer>3</integer>
 			<key>config</key>
 			<dict>
 				<key>keyword</key>
-				<string>oj</string>
+				<string>cd</string>
 				<key>title</key>
 				<string>URL Jump</string>
 				<key>script</key>
@@ -191,12 +191,12 @@
 				<false/>
 			</dict>
 		</dict>
-		<!-- Open URL: oj -->
+		<!-- Open URL: cd -->
 		<dict>
 			<key>type</key>
 			<string>alfred.workflow.action.openurl</string>
 			<key>uid</key>
-			<string>oj-open</string>
+			<string>cd-open</string>
 			<key>version</key>
 			<integer>1</integer>
 			<key>config</key>
@@ -205,18 +205,18 @@
 				<string>{query}</string>
 			</dict>
 		</dict>
-		<!-- Script Filter: cj -->
+		<!-- Script Filter: codeup -->
 		<dict>
 			<key>type</key>
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>cj-filter</string>
+			<string>codeup-filter</string>
 			<key>version</key>
 			<integer>3</integer>
 			<key>config</key>
 			<dict>
 				<key>keyword</key>
-				<string>cj</string>
+				<string>codeup</string>
 				<key>title</key>
 				<string>Codeup Jump</string>
 				<key>script</key>
@@ -243,12 +243,116 @@
 				<false/>
 			</dict>
 		</dict>
-		<!-- Open URL: cj -->
+		<!-- Open URL: codeup -->
 		<dict>
 			<key>type</key>
 			<string>alfred.workflow.action.openurl</string>
 			<key>uid</key>
-			<string>cj-open</string>
+			<string>codeup-open</string>
+			<key>version</key>
+			<integer>1</integer>
+			<key>config</key>
+			<dict>
+				<key>url</key>
+				<string>{query}</string>
+			</dict>
+		</dict>
+		<!-- Script Filter: dt -->
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>dt-filter</string>
+			<key>version</key>
+			<integer>3</integer>
+			<key>config</key>
+			<dict>
+				<key>keyword</key>
+				<string>dt</string>
+				<key>title</key>
+				<string>Duitang Operator</string>
+				<key>script</key>
+				<string>URLJUMP_SECTION=dt ./urljump "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>runningsubtext</key>
+				<string>Searching...</string>
+				<key>withspace</key>
+				<true/>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>type</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyalinitially</key>
+				<true/>
+				<key>alfredfiltersresults</key>
+				<false/>
+			</dict>
+		</dict>
+		<!-- Open URL: dt -->
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>dt-open</string>
+			<key>version</key>
+			<integer>1</integer>
+			<key>config</key>
+			<dict>
+				<key>url</key>
+				<string>{query}</string>
+			</dict>
+		</dict>
+		<!-- Script Filter: dtw -->
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>dtw-filter</string>
+			<key>version</key>
+			<integer>3</integer>
+			<key>config</key>
+			<dict>
+				<key>keyword</key>
+				<string>dtw</string>
+				<key>title</key>
+				<string>DTW Audit</string>
+				<key>script</key>
+				<string>URLJUMP_SECTION=dtw ./urljump "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>runningsubtext</key>
+				<string>Searching...</string>
+				<key>withspace</key>
+				<true/>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>type</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyalinitially</key>
+				<true/>
+				<key>alfredfiltersresults</key>
+				<false/>
+			</dict>
+		</dict>
+		<!-- Open URL: dtw -->
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>dtw-open</string>
 			<key>version</key>
 			<integer>1</integer>
 			<key>config</key>
@@ -420,11 +524,11 @@
 				<string></string>
 			</dict>
 		</array>
-		<key>oj-filter</key>
+		<key>cd-filter</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>oj-open</string>
+				<string>cd-open</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -459,11 +563,37 @@
 				<string></string>
 			</dict>
 		</array>
-		<key>cj-filter</key>
+		<key>codeup-filter</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>cj-open</string>
+				<string>codeup-open</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitowards</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>dt-filter</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>dt-open</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitowards</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>dtw-filter</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>dtw-open</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -550,33 +680,61 @@
 			<key>ypos</key>
 			<integer>350</integer>
 		</dict>
-		<key>oj-filter</key>
+		<key>cd-filter</key>
 		<dict>
 			<key>xpos</key>
 			<integer>100</integer>
 			<key>ypos</key>
 			<integer>650</integer>
 		</dict>
-		<key>oj-open</key>
+		<key>cd-open</key>
 		<dict>
 			<key>xpos</key>
 			<integer>350</integer>
 			<key>ypos</key>
 			<integer>650</integer>
 		</dict>
-		<key>cj-filter</key>
+		<key>codeup-filter</key>
 		<dict>
 			<key>xpos</key>
 			<integer>100</integer>
 			<key>ypos</key>
 			<integer>800</integer>
 		</dict>
-		<key>cj-open</key>
+		<key>codeup-open</key>
 		<dict>
 			<key>xpos</key>
 			<integer>350</integer>
 			<key>ypos</key>
 			<integer>800</integer>
+		</dict>
+		<key>dt-filter</key>
+		<dict>
+			<key>xpos</key>
+			<integer>100</integer>
+			<key>ypos</key>
+			<integer>950</integer>
+		</dict>
+		<key>dt-open</key>
+		<dict>
+			<key>xpos</key>
+			<integer>350</integer>
+			<key>ypos</key>
+			<integer>950</integer>
+		</dict>
+		<key>dtw-filter</key>
+		<dict>
+			<key>xpos</key>
+			<integer>100</integer>
+			<key>ypos</key>
+			<integer>1100</integer>
+		</dict>
+		<key>dtw-open</key>
+		<dict>
+			<key>xpos</key>
+			<integer>350</integer>
+			<key>ypos</key>
+			<integer>1100</integer>
 		</dict>
 		<key>dd-trigger</key>
 		<dict>
