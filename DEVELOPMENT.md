@@ -16,7 +16,7 @@ src/
 ├── ci.ts          # 工具 ci：Jenkins Job 列表
 ├── vv.ts          # 工具 vv：音量切换
 ├── dd.ts          # 工具 dd：勿扰模式切换
-└── urljump.ts     # 工具 cd/codeup/dt/dtw：URL 快速跳转
+└── urljump.ts     # 工具 cd/code/dt/dtw：URL 快速跳转
 
 icons/             # 工具图标（SVG 源文件 + PNG 导出）
 dist/              # 构建产物（编译后的可执行文件）
@@ -83,7 +83,7 @@ bun run pack
 
 项目中的工具主要分为两类：
 
-**Script Filter 类**（j, ci, cd/codeup/dt/dtw）— 接收用户输入，输出 Alfred item 列表供选择：
+**Script Filter 类**（j, ci, cd/code/dt/dtw）— 接收用户输入，输出 Alfred item 列表供选择：
 - 读取环境变量或配置文件
 - Fetch 数据或扫描文件系统
 - 模糊匹配 + 排序

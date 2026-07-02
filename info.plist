@@ -205,22 +205,22 @@
 				<string>{query}</string>
 			</dict>
 		</dict>
-		<!-- Script Filter: codeup -->
+		<!-- Script Filter: code -->
 		<dict>
 			<key>type</key>
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>codeup-filter</string>
+			<string>code-filter</string>
 			<key>version</key>
 			<integer>3</integer>
 			<key>config</key>
 			<dict>
 				<key>keyword</key>
-				<string>codeup</string>
+				<string>code</string>
 				<key>title</key>
-				<string>Codeup Jump</string>
+				<string>Code Jump</string>
 				<key>script</key>
-				<string>URLJUMP_SECTION=codeup ./urljump "{query}"</string>
+				<string>URLJUMP_SECTION=code ./urljump "{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>runningsubtext</key>
@@ -243,12 +243,12 @@
 				<false/>
 			</dict>
 		</dict>
-		<!-- Open URL: codeup -->
+		<!-- Open URL: code -->
 		<dict>
 			<key>type</key>
 			<string>alfred.workflow.action.openurl</string>
 			<key>uid</key>
-			<string>codeup-open</string>
+			<string>code-open</string>
 			<key>version</key>
 			<integer>1</integer>
 			<key>config</key>
@@ -563,11 +563,11 @@
 				<string></string>
 			</dict>
 		</array>
-		<key>codeup-filter</key>
+		<key>code-filter</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>codeup-open</string>
+				<string>code-open</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -694,14 +694,14 @@
 			<key>ypos</key>
 			<integer>650</integer>
 		</dict>
-		<key>codeup-filter</key>
+		<key>code-filter</key>
 		<dict>
 			<key>xpos</key>
 			<integer>100</integer>
 			<key>ypos</key>
 			<integer>800</integer>
 		</dict>
-		<key>codeup-open</key>
+		<key>code-open</key>
 		<dict>
 			<key>xpos</key>
 			<integer>350</integer>

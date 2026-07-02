@@ -10,7 +10,7 @@
 | `ci` | CI | 查看 Jenkins Job 列表及构建状态 |
 | `vv` | Volume | 在低音量 (25) 和高音量 (55) 之间一键切换 |
 | `dd` | DND | 通过 macOS 快捷指令切换勿扰模式 |
-| `cd` / `codeup` | URL Jump | 基于配置文件的 URL 快速跳转 |
+| `cd` / `code` | URL Jump | 基于配置文件的 URL 快速跳转 |
 | `dt` / `dtw` | Operator Jump | 按环境跳转运营后台 |
 
 ## 安装
@@ -44,6 +44,7 @@
 | `JENKINS_TOKEN` | 否 | API Token |
 
 输入 `ci <关键字>` 模糊搜索 Job，回车在浏览器打开对应 Job 页面。构建状态通过图标颜色区分：绿色成功、红色失败、蓝色运行中、灰色未知。
+如果 `~/.config/urljump.toml` 配置了 `[data.ci].keys`，这些项目名会作为本地提示合并到 Jenkins Job 列表中。
 
 ### vv (Volume)
 
@@ -53,7 +54,7 @@
 
 需要在 macOS 快捷指令 App 中创建一个名为 `focus-toggle` 的快捷指令，用于切换勿扰/专注模式。
 
-### cd / codeup (URL Jump)
+### cd / code (URL Jump)
 
 | 变量 | 必填 | 说明 | 默认值 |
 |------|------|------|--------|
@@ -78,6 +79,6 @@ dynamic_pattern = "^0[0-9]{2}$"
 dynamic_tpl = "https://operate-t%s.duitang.com/backend/#/dashboard"
 ```
 
-输入 `cd <关键字>` 模糊匹配 key，回车在浏览器打开拼接后的 URL。`codeup <关键字>` 使用 `codeup` section。可通过 `URLJUMP_SECTION` 环境变量切换不同的 section。
+输入 `cd <关键字>` 模糊匹配 key，回车在浏览器打开拼接后的 URL。`code <关键字>` 使用 `code` section。可通过 `URLJUMP_SECTION` 环境变量切换不同的 section。
 
 输入 `dt <环境>` 或 `dtw <环境>` 按环境跳转运营后台，环境参数必须指定，例如 `online`、`beta`、`024`。匹配 `0xx` 的测试环境会通过 `dynamic_tpl` 动态拼接 URL。

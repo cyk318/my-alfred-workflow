@@ -5,6 +5,7 @@ const query = process.argv[2] ?? "";
 const jenkinsUrl = process.env.JENKINS_URL ?? "";
 const jenkinsUser = process.env.JENKINS_USER ?? "";
 const jenkinsToken = process.env.JENKINS_TOKEN ?? "";
+const configPath = `${process.env.HOME}/.config/urljump.toml`;
 const showParams = (process.env.JENKINS_SHOW_PARAMS ?? "")
   .split(",")
   .map((s) => s.trim())
@@ -38,6 +39,14 @@ interface JenkinsJob {
 
 interface JenkinsResponse {
   jobs: JenkinsJob[];
+}
+
+interface UrlJumpConfig {
+  data?: {
+    ci?: {
+      keys?: string[];
+    };
+  };
 }
 
 function buildApiUrl(includeParams: boolean): string {
@@ -95,8 +104,32 @@ async function fetchJobs(): Promise<JenkinsJob[]> {
   }
 }
 
+async function loadCiHints(): Promise<JenkinsJob[]> {
+  try {
+    const text = await Bun.file(configPath).text();
+    const config = Bun.TOML.parse(text) as UrlJumpConfig;
+    const keys = config.data?.ci?.keys ?? [];
+    return keys
+      .map((name) => name.trim())
+      .filter(Boolean)
+      .map((name) => ({
+        name,
+        url: `${jenkinsUrl.replace(/\/$/, "")}/job/${encodeURIComponent(name)}/`,
+        color: "notbuilt",
+      }));
+  } catch {
+    return [];
+  }
+}
+
+function mergeJobs(jobs: JenkinsJob[], hints: JenkinsJob[]): JenkinsJob[] {
+  const names = new Set(jobs.map((job) => job.name));
+  const missingHints = hints.filter((job) => !names.has(job.name));
+  return [...jobs, ...missingHints];
+}
+
 try {
-  const jobs = await fetchJobs();
+  const jobs = mergeJobs(await fetchJobs(), await loadCiHints());
 
   const scored = jobs
     .map((job) => ({ ...job, score: query ? fuzzyScore(query, job.name) : 1 }))
