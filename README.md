@@ -36,7 +36,11 @@
 
 项目路径交给 IntelliJ IDEA 处理：已打开时聚焦对应项目，未打开时打开项目，再调用 `Window → Merge All Project Windows`，让所有项目成为同一大窗口下的标签页。复用 IDEA 的[项目窗口合并功能](https://www.jetbrains.com/help/idea/open-close-and-move-projects.html)，不会把多个项目变成一个工程或替换当前工程。
 
-需要安装 IntelliJ IDEA，并在 macOS「系统设置 → 隐私与安全性 → 辅助功能」中允许 Alfred，首次提示控制 System Events 时也需允许。支持英文及中文的窗口合并菜单。新项目首次打开若出现信任或导入确认，请自行处理；等待超过 60 秒会通知，处理后再执行 `j` 即可。
+需要将 IntelliJ IDEA 安装到 `/Applications` 或 `~/Applications`，并在 macOS「系统设置 → 隐私与安全性 → 辅助功能」中允许 Alfred，首次提示控制 System Events 时也需允许。启动 IDEA 先执行，权限问题会提示。支持英文及中文的窗口合并菜单。
+
+IDEA 完全退出时，先启动到欢迎页（File 菜单就绪即可），再通过 IDEA 命令行入口发送一次项目路径；不重复发送 macOS 打开文件事件。已打开的项目通过 Window 菜单选中对应标签页、恢复最小化并聚焦，合并后再次确认目标窗口。启动和聚焦各最多等待 120 秒。IDEA「Open project in」应设为「New window」（本机已为此设置），然后由命令合并项目窗口。新项目的信任或导入确认需自行处理，处理后可重新执行 `j`。
+
+执行开始、成功或失败均记录到 `~/Library/Logs/my-alfred-workflow/jump.log`，失败时通过 Alfred 通知提示；若系统屏蔽了通知，可从该文件查看时间、项目路径和具体错误。
 
 ### ci (Jenkins)
 

@@ -97,7 +97,7 @@
 			<key>config</key>
 			<dict>
 				<key>script</key>
-				<string>./jump --open "$1"</string>
+				<string>./jump --open "$1" || :</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>type</key>

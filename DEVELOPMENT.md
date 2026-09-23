@@ -98,4 +98,10 @@ bun test
 - 调用 `osascript` 或 `shortcuts` 命令
 - 输出通知或日志
 
-`j` 在 `jump.ts` 中扫描项目并复用 `fuzzy.ts` 的评分。Script Filter 执行 `./jump "$1"`，选中后执行 `./jump --open "$1"`，两节点均使用 argv 传参。打开通过 `/usr/bin/open -a "IntelliJ IDEA" <完整路径>`，由 IDEA 识别已打开的工程；随后等待目标项目窗口并调用窗口合并菜单。AppleScript 内嵌于二进制，无需额外运行时。失败输出连接通知，成功不弹通知。
+`j` 在 `jump.ts` 中扫描项目并复用 `fuzzy.ts` 的评分。Script Filter 执行 `./jump "$1"`，选中后执行 `./jump --open "$1" || :`，两节点均使用 argv 传参。Run Script 保留失败的 stdout 并正常结束，让下游通知节点收到错误；二进制本身仍以非零退出码报告失败，并写入 `~/Library/Logs/my-alfred-workflow/jump.log`。
+
+先通过 `/usr/bin/open -a "IntelliJ IDEA"` 只启动应用，欢迎页 File 菜单就绪后，通过应用包内 `Contents/MacOS/idea <完整路径>` 只发送一次项目。欢迎页没有 Window 菜单，不能把它作为启动就绪条件；macOS 打开文件事件携带当前项目作为 `projectToClose`，也不能在加载期间反复发送同一个项目路径。使用 IDEA「New window」配置保留既有项目，再合并窗口。
+
+启动器从 `/Applications`、`~/Applications` 查找，不通过 AppleScript 查询 IDEA 应用路径：后者在 Alfred 进程下曾挂起，终端测试却没有复现。
+
+辅助功能检查放在启动之后；窗口合并后的非当前项目可能不在 `windows` 列表里，所以通过 Window 菜单选中项目，再恢复最小化、置前和合并，最后重新聚焦目标窗口。AppleScript 内嵌于二进制，无需额外运行时。桌面验收必须从 Alfred 实际 Run Script 节点执行，连续覆盖 ⌘Q 后打开第一个项目、第二个项目加入且第一个仍保留、两个项目来回切换，不能以终端单次成功替代完整验证。
