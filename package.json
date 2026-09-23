@@ -3,10 +3,13 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "bun build --compile src/jump.ts --outfile dist/jump && bun build --compile src/ci.ts --outfile dist/ci && bun build --compile src/vv.ts --outfile dist/vv && bun build --compile src/dd.ts --outfile dist/dd && bun build --compile src/urljump.ts --outfile dist/urljump",
-    "pack": "bun run build && cp info.plist icons/*.png dist/ && cd dist && zip -j ../My-Workflow.alfredworkflow info.plist jump ci vv dd urljump *.png && rm info.plist *.png",
+    "build": "bun build --compile src/jump.ts --outfile dist/jump && bun build --compile src/ci.ts --outfile dist/ci && bun build --compile src/cd.ts --outfile dist/cd && bun build --compile src/co.ts --outfile dist/co && bun build --compile src/vv.ts --outfile dist/vv && bun build --compile src/dd.ts --outfile dist/dd && bun build --compile src/urljump.ts --outfile dist/urljump",
+    "pack": "bun run build && cp info.plist icons/*.png dist/ && cd dist && zip -j ../My-Workflow.alfredworkflow info.plist jump ci cd co vv dd urljump *.png && rm info.plist *.png",
+    "test": "bun test",
     "dev:jump": "bun run src/jump.ts",
-    "dev:ci": "bun run src/ci.ts"
+    "dev:ci": "bun run src/ci.ts",
+    "dev:cd": "bun run src/cd.ts",
+    "dev:co": "bun run src/co.ts"
   },
   "devDependencies": {
     "@types/bun": "latest"

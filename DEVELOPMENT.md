@@ -14,9 +14,11 @@ src/
 ├── fuzzy.ts       # 共享模块：模糊匹配评分算法
 ├── jump.ts        # 工具 j：项目目录跳转
 ├── ci.ts          # 工具 ci：Jenkins Job 列表
+├── cd.ts          # 工具 cd：Prism2 动态应用列表
+├── co.ts          # 工具 co：Codeup 动态仓库列表
 ├── vv.ts          # 工具 vv：音量切换
 ├── dd.ts          # 工具 dd：勿扰模式切换
-└── urljump.ts     # 工具 cd/code/dt/dtw：URL 快速跳转
+└── urljump.ts     # 工具 dt/dtw：URL 快速跳转
 
 icons/             # 工具图标（SVG 源文件 + PNG 导出）
 dist/              # 构建产物（编译后的可执行文件）
@@ -48,6 +50,9 @@ bun run build
 
 # 构建 + 打包为 .alfredworkflow（包含可执行文件、info.plist、图标）
 bun run pack
+
+# 验证 CD / Codeup 请求、分页、认证错误与项目匹配
+bun test
 ```
 
 `bun run build` 对每个工具执行 `bun build --compile`，生成的可执行文件无需 Bun 运行时即可运行。
@@ -83,7 +88,7 @@ bun run pack
 
 项目中的工具主要分为两类：
 
-**Script Filter 类**（j, ci, cd/code/dt/dtw）— 接收用户输入，输出 Alfred item 列表供选择：
+**Script Filter 类**（j, ci, cd, co, dt/dtw）— 接收用户输入，输出 Alfred item 列表供选择：
 - 读取环境变量或配置文件
 - Fetch 数据或扫描文件系统
 - 模糊匹配 + 排序

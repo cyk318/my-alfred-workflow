@@ -11,7 +11,7 @@
 	<key>createdby</key>
 	<string>yikang.chen</string>
 	<key>version</key>
-	<string>1.0.0</string>
+	<string>1.0.1</string>
 	<key>category</key>
 	<string>Productivity</string>
 	<key>variables</key>
@@ -26,10 +26,22 @@
 		<string></string>
 		<key>JENKINS_SHOW_PARAMS</key>
 		<string>GIT_BRANCH,BUILD_NO</string>
+		<key>PRISM_URL</key>
+		<string>https://prism2.dtactivity.cn</string>
+		<key>PRISM_API_URL</key>
+		<string>http://10.0.48.40:19120</string>
+		<key>PRISM_TOKEN</key>
+		<string></string>
+		<key>DUITANG_CODEUP_TOKEN</key>
+		<string></string>
+		<key>CODEUP_ORGANIZATION_ID</key>
+		<string>696621912baf901da4b64b75</string>
 	</dict>
 	<key>variablesdontexport</key>
 	<array>
 		<string>JENKINS_TOKEN</string>
+		<string>PRISM_TOKEN</string>
+		<string>DUITANG_CODEUP_TOKEN</string>
 	</array>
 	<key>objects</key>
 	<array>
@@ -166,11 +178,16 @@
 				<key>keyword</key>
 				<string>cd</string>
 				<key>title</key>
-				<string>URL Jump</string>
+				<string>Prism2 CD</string>
 				<key>script</key>
-				<string>./urljump "{query}"</string>
+				<string>/bin/zsh -c '
+if [[ -z "$PRISM_TOKEN" &amp;&amp; -f "$HOME/.zshrc_sensitive" ]]; then
+  source "$HOME/.zshrc_sensitive" &gt;/dev/null
+fi
+exec ./cd "$1"
+' -- "$1"</string>
 				<key>scriptargtype</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>runningsubtext</key>
 				<string>Searching...</string>
 				<key>withspace</key>
@@ -205,24 +222,29 @@
 				<string>{query}</string>
 			</dict>
 		</dict>
-		<!-- Script Filter: code -->
+		<!-- Script Filter: co -->
 		<dict>
 			<key>type</key>
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>code-filter</string>
+			<string>co-filter</string>
 			<key>version</key>
 			<integer>3</integer>
 			<key>config</key>
 			<dict>
 				<key>keyword</key>
-				<string>code</string>
+				<string>co</string>
 				<key>title</key>
-				<string>Code Jump</string>
+				<string>Codeup Repositories</string>
 				<key>script</key>
-				<string>URLJUMP_SECTION=code ./urljump "{query}"</string>
+				<string>/bin/zsh -c '
+if [[ -z "$DUITANG_CODEUP_TOKEN" &amp;&amp; -f "$HOME/.zshrc_sensitive" ]]; then
+  source "$HOME/.zshrc_sensitive" &gt;/dev/null
+fi
+exec ./co "$1"
+' -- "$1"</string>
 				<key>scriptargtype</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>runningsubtext</key>
 				<string>Searching...</string>
 				<key>withspace</key>
@@ -243,12 +265,12 @@
 				<false/>
 			</dict>
 		</dict>
-		<!-- Open URL: code -->
+		<!-- Open URL: co -->
 		<dict>
 			<key>type</key>
 			<string>alfred.workflow.action.openurl</string>
 			<key>uid</key>
-			<string>code-open</string>
+			<string>co-open</string>
 			<key>version</key>
 			<integer>1</integer>
 			<key>config</key>
@@ -563,11 +585,11 @@
 				<string></string>
 			</dict>
 		</array>
-		<key>code-filter</key>
+		<key>co-filter</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>code-open</string>
+				<string>co-open</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -694,14 +716,14 @@
 			<key>ypos</key>
 			<integer>650</integer>
 		</dict>
-		<key>code-filter</key>
+		<key>co-filter</key>
 		<dict>
 			<key>xpos</key>
 			<integer>100</integer>
 			<key>ypos</key>
 			<integer>800</integer>
 		</dict>
-		<key>code-open</key>
+		<key>co-open</key>
 		<dict>
 			<key>xpos</key>
 			<integer>350</integer>

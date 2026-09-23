@@ -10,7 +10,8 @@
 | `ci` | CI | 查看 Jenkins Job 列表及构建状态 |
 | `vv` | Volume | 在低音量 (25) 和高音量 (55) 之间一键切换 |
 | `dd` | DND | 通过 macOS 快捷指令切换勿扰模式 |
-| `cd` / `code` | URL Jump | 基于配置文件的 URL 快速跳转 |
+| `cd` | Prism2 CD | 实时查询 Prism2 应用，搜索后跳转发布页 |
+| `co` | Codeup | 动态查询 Codeup 仓库，搜索后跳转仓库页面 |
 | `dt` / `dtw` | Operator Jump | 按环境跳转运营后台 |
 
 ## 安装
@@ -54,23 +55,40 @@
 
 需要在 macOS 快捷指令 App 中创建一个名为 `focus-toggle` 的快捷指令，用于切换勿扰/专注模式。
 
-### cd / code (URL Jump)
+### cd (Prism2 CD)
 
 | 变量 | 必填 | 说明 | 默认值 |
 |------|------|------|--------|
-| `URLJUMP_SECTION` | 否 | 使用的配置 section 名称 | `cd` |
+| `PRISM_URL` | 否 | 浏览器打开的 Prism2 根地址 | `https://prism2.dtactivity.cn` |
+| `PRISM_API_URL` | 否 | 可直连的 Prism2 API 根地址，不含接口路径 | `http://10.0.48.40:19120` |
+| `PRISM_TOKEN` | 是 | Prism2 用户 API Token，需具有 `m:read:cd` 权限 | 可从本机敏感配置加载 |
+
+输入 `cd` 通过 `GET /m-api/cd/apps` 查询当前应用列表；输入 `cd dt-vshop` 或部分名称进行模糊匹配，回车打开 `https://prism2.dtactivity.cn/cd/apps/dt-vshop`。完整名称优先排列。不再读取 `[data.cd]`，也无需维护项目名清单。
+
+列表同时显示发布状态文字，并复用 `ci` 图标：`RUNNING`（发布成功）为绿色，`DEPLOYING`（发布中）为进行中图标，`FAILED`（发布失败）和 `MANUALLY_STOP`（发布已手动停止）为红色，未知或缺失状态为灰色。状态来自 Prism2 的发布记录，不代表实时进程健康。
+
+Token 使用 `X-Auth-Token` 请求头发送，可在 Prism2 的 `/m/users/tokens` 页面管理。可在 Alfred Workflow 环境变量中填写；未填写时，`cd` 入口会用 zsh 加载 `~/.zshrc_sensitive` 中的 `export PRISM_TOKEN=...`。Token 不写入仓库，导出 Workflow 时排除该变量。API Token 仍受角色权限控制，不是通用免鉴权 key。
+
+默认 API 地址需要可访问内网的网络，浏览器仍打开公网 `PRISM_URL`。公网域名可能返回 WAF 页面或 SSO 登录跳转，因此 API 地址可以单独配置。请求最长等待 5 秒，认证失败、非 JSON 响应或网络异常会显示不可操作的错误提示。
+
+### co (Codeup)
+
+| 变量 | 必填 | 说明 | 默认值 |
+|------|------|------|--------|
+| `DUITANG_CODEUP_TOKEN` | 是 | Codeup 个人访问令牌，需要代码仓库只读权限 | 可从本机敏感配置加载 |
+| `CODEUP_ORGANIZATION_ID` | 否 | Codeup 组织 ID | `696621912baf901da4b64b75` |
+
+输入 `co` 查询当前 Token 可访问的全部仓库；输入 `co dt-vshop` 按仓库名称或分组路径模糊搜索，完整名称优先，回车打开接口返回的仓库页面。分组路径显示在副标题中，便于区分不同分组的同名仓库。原 `code` 关键字已替换为 `co`，不再读取 `[data.code]`。
+
+Alfred 未配置 `DUITANG_CODEUP_TOKEN` 时，`co` 入口会用 zsh 加载 `~/.zshrc_sensitive` 中的同名环境变量。Token 不写入仓库，导出 Workflow 时排除该变量。
+
+使用 Codeup [仓库列表 API](https://help.aliyun.com/zh/yunxiao/developer-reference/listrepositories-query-code-base-list)，每页 100 条并读取全部分页，整次查询最多等待 15 秒。认证失败、限流、分页不完整或网络异常会显示错误提示，不返回部分列表。
+
+### dt / dtw (Operator Jump)
 
 配置文件路径：`~/.config/urljump.toml`，格式如下：
 
 ```toml
-[data.cd]
-tpl = "https://example.com/app/%s/dashboard"
-keys = ["app-a", "app-b", "app-c"]
-
-[data.dev]
-tpl = "https://dev.example.com/%s"
-keys = ["service-1", "service-2"]
-
 [data.dt]
 require_query = true
 keys = ["online", "beta"]
@@ -79,6 +97,6 @@ dynamic_pattern = "^0[0-9]{2}$"
 dynamic_tpl = "https://operate-t%s.duitang.com/backend/#/dashboard"
 ```
 
-输入 `cd <关键字>` 模糊匹配 key，回车在浏览器打开拼接后的 URL。`code <关键字>` 使用 `code` section。可通过 `URLJUMP_SECTION` 环境变量切换不同的 section。
+通用 `urljump` 工具通过 `URLJUMP_SECTION` 环境变量选择 `dt` 或 `dtw` section。
 
 输入 `dt <环境>` 或 `dtw <环境>` 按环境跳转运营后台，环境参数必须指定，例如 `online`、`beta`、`024`。匹配 `0xx` 的测试环境会通过 `dynamic_tpl` 动态拼接 URL。
