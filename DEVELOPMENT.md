@@ -12,7 +12,7 @@
 src/
 ├── alfred.ts      # 共享模块：Alfred JSON 输出格式封装
 ├── fuzzy.ts       # 共享模块：模糊匹配评分算法
-├── jump.ts        # 工具 j：项目目录跳转
+├── jump.ts        # 工具 j：IDEA 项目搜索、切换、打开及窗口合并
 ├── ci.ts          # 工具 ci：Jenkins Job 列表
 ├── cd.ts          # 工具 cd：Prism2 动态应用列表
 ├── co.ts          # 工具 co：Codeup 动态仓库列表
@@ -51,7 +51,7 @@ bun run build
 # 构建 + 打包为 .alfredworkflow（包含可执行文件、info.plist、图标）
 bun run pack
 
-# 验证 CD / Codeup 请求、分页、认证错误与项目匹配
+# 验证 CD / Codeup 请求及 j 项目搜索、打开参数与异常处理
 bun test
 ```
 
@@ -97,3 +97,5 @@ bun test
 **Run Script 类**（vv, dd）— 直接执行操作，无需用户选择：
 - 调用 `osascript` 或 `shortcuts` 命令
 - 输出通知或日志
+
+`j` 在 `jump.ts` 中扫描项目并复用 `fuzzy.ts` 的评分。Script Filter 执行 `./jump "$1"`，选中后执行 `./jump --open "$1"`，两节点均使用 argv 传参。打开通过 `/usr/bin/open -a "IntelliJ IDEA" <完整路径>`，由 IDEA 识别已打开的工程；随后等待目标项目窗口并调用窗口合并菜单。AppleScript 内嵌于二进制，无需额外运行时。失败输出连接通知，成功不弹通知。

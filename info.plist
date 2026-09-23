@@ -16,8 +16,6 @@
 	<string>Productivity</string>
 	<key>variables</key>
 	<dict>
-		<key>SCAN_DIRS</key>
-		<string></string>
 		<key>JENKINS_URL</key>
 		<string></string>
 		<key>JENKINS_USER</key>
@@ -63,11 +61,11 @@
 				<key>keyword</key>
 				<string>j</string>
 				<key>title</key>
-				<string>Project Jump</string>
+				<string>IDEA Project Jump</string>
 				<key>script</key>
-				<string>./jump "{query}"</string>
+				<string>./jump "$1"</string>
 				<key>scriptargtype</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>runningsubtext</key>
 				<string>Scanning projects...</string>
 				<key>withspace</key>
@@ -99,13 +97,35 @@
 			<key>config</key>
 			<dict>
 				<key>script</key>
-				<string>idea "{query}"</string>
+				<string>./jump --open "$1"</string>
 				<key>scriptargtype</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>type</key>
 				<integer>0</integer>
 				<key>escaping</key>
 				<integer>0</integer>
+			</dict>
+		</dict>
+		<!-- Post Notification: j errors -->
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>jump-notify</string>
+			<key>version</key>
+			<integer>1</integer>
+			<key>config</key>
+			<dict>
+				<key>title</key>
+				<string>IDEA Jump</string>
+				<key>text</key>
+				<string>{query}</string>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<true/>
+				<key>removeextension</key>
+				<false/>
 			</dict>
 		</dict>
 		<!-- Script Filter: ci -->
@@ -533,6 +553,19 @@ exec ./co "$1"
 				<string></string>
 			</dict>
 		</array>
+		<key>jump-open</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>jump-notify</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitowards</key>
+				<string></string>
+			</dict>
+		</array>
 		<key>ci-filter</key>
 		<array>
 			<dict>
@@ -658,14 +691,21 @@ exec ./co "$1"
 			<key>xpos</key>
 			<integer>100</integer>
 			<key>ypos</key>
-			<integer>50</integer>
+			<integer>1250</integer>
 		</dict>
 		<key>jump-open</key>
 		<dict>
 			<key>xpos</key>
 			<integer>350</integer>
 			<key>ypos</key>
-			<integer>50</integer>
+			<integer>1250</integer>
+		</dict>
+		<key>jump-notify</key>
+		<dict>
+			<key>xpos</key>
+			<integer>600</integer>
+			<key>ypos</key>
+			<integer>1250</integer>
 		</dict>
 		<key>ci-filter</key>
 		<dict>

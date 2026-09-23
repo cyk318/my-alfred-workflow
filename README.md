@@ -6,7 +6,7 @@
 
 | 关键字 | 工具 | 功能 |
 |--------|------|------|
-| `j` | Jump | 模糊搜索项目目录，回车用编辑器打开 |
+| `j` | IDEA Jump | 模糊搜索项目，聚焦或打开 IDEA 项目并合并为一个窗口的标签页 |
 | `ci` | CI | 查看 Jenkins Job 列表及构建状态 |
 | `vv` | Volume | 在低音量 (25) 和高音量 (55) 之间一键切换 |
 | `dd` | DND | 通过 macOS 快捷指令切换勿扰模式 |
@@ -28,13 +28,15 @@
 
 在 Alfred Workflow 的环境变量中设置以下参数：
 
-### j (Jump)
+### j (IDEA Jump)
 
-| 变量 | 必填 | 说明 | 示例 |
-|------|------|------|------|
-| `SCAN_DIRS` | 是 | 要扫描的项目父目录，逗号分隔 | `~/code,~/work` |
+输入 `j dt-vshop`、`j vsh` 等模糊搜索项目，完整名称优先，回车切换或打开。输入 `j` 列出全部项目。
 
-输入 `j <关键字>` 模糊匹配目录名，回车打开对应路径。
+固定扫描 `~/code/my` 和 `~/code/duitang` 的直接子目录，忽略隐藏目录。同名项目显示各自完整路径。
+
+项目路径交给 IntelliJ IDEA 处理：已打开时聚焦对应项目，未打开时打开项目，再调用 `Window → Merge All Project Windows`，让所有项目成为同一大窗口下的标签页。复用 IDEA 的[项目窗口合并功能](https://www.jetbrains.com/help/idea/open-close-and-move-projects.html)，不会把多个项目变成一个工程或替换当前工程。
+
+需要安装 IntelliJ IDEA，并在 macOS「系统设置 → 隐私与安全性 → 辅助功能」中允许 Alfred，首次提示控制 System Events 时也需允许。支持英文及中文的窗口合并菜单。新项目首次打开若出现信任或导入确认，请自行处理；等待超过 60 秒会通知，处理后再执行 `j` 即可。
 
 ### ci (Jenkins)
 
